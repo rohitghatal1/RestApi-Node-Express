@@ -7998,5 +7998,13 @@
         "email": "aabrahamoffrr@geocities.com",
         "gender": "Male",
         "job_title": "Chemical Engineer"
+    },
+    {
+        "first_name": "Rohit",
+        "last_name": "Ghatal",
+        "email": "rohitghatal@gmail.com",
+        "gender": "male",
+        "job_title": "Web Developer",
+        "id": 1001
     }
 ]
