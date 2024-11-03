@@ -18,8 +18,21 @@ app.get("/users", (req, res) => {
 
 })
 
+app.use((req, res, next)=> {
+    console.log("Hello from middleware  1")
+    req.myName = "Rohit Ghatal"
+    // return res.json({msg: "request stopped at middleware 1"});
+    next();
+})
+
+app.use((req, res, next)=> {
+    console.log("Mdddleware 2:", req.myName)
+    // return res.json({msg: "request stopped at middleware 1"});
+    next();
+})
 //REST API
 app.get("/api/users", (req, res) => {
+    console.log("Im in get route:", req.myName)
     res.json(users);
 })
 
@@ -43,7 +56,7 @@ app.post("/api/users", (req, res) => {
     const body = req.body;
     users.push({...body, id: users.length+1});
     fs.writeFile("./MOCK_DATA.json", JSON.stringify(users), (err, data)=> {
-        return res.json({ status: "Pending" })
+        return res.json({ status: "Success", id: users.length })
 
     })
     console.log("Body", body)
