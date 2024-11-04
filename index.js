@@ -33,8 +33,9 @@ const userSchema = new mongoose.Schema({
 
     gender: {
         type: String
-    }
-})
+    },
+   
+}, {timestamps: true})
 
 const User = mongoose.model("user", userSchema);
 //middle ware
@@ -84,14 +85,19 @@ app.route("/api/users/:id")
         return res.json({ status: "Pending" })
     })
 
-app.post("/api/users", (req, res) => {
+app.post("/api/users", async (req, res) => {
     const body = req.body;
-    users.push({...body, id: users.length+1});
-    fs.writeFile("./MOCK_DATA.json", JSON.stringify(users), (err, data)=> {
-        return res.status().json({ status: "Success", id: users.length })
 
+    const result =  await User.create({
+        first_name: body.first_name,
+        last_name: body.last_name,
+        email: body.email,
+        gender: body.gender,
+        job_title: body.job_title
     })
-    console.log("Body", body)
+    console.log(result);
+
+    return res.status(201).json({ msg: "success"});
 })
 
 app.listen(PORT, () => console.log(`Server started at PORT: ${PORT}`))
