@@ -1,5 +1,4 @@
 const express = require("express");
-const users = require('./MOCK_DATA.json');
 const mongoose = require("mongoose");
 const fs = require("fs");
 const { type } = require("os");
@@ -18,6 +17,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+
     last_name: {
         type: String,
     },
@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+
     job_title: {
         type: String,
     },
@@ -38,13 +39,15 @@ const userSchema = new mongoose.Schema({
 }, {timestamps: true})
 
 const User = mongoose.model("user", userSchema);
+
 //middle ware
 app.use(express.urlencoded({extended: false}));
 
-app.get("/users", (req, res) => {
+app.get("/users", async (req, res) => {
+    const allDBUsers = await User.find({});
     const html = `
         <ul>
-            ${users.map((user) => `<li>${user.first_name}</li>`)}
+            ${allDBUsers.map((user) => `<li>${user.first_name} - ${user.email}</li>`).join("")}
         </ul>
     `;
     res.send(html);
