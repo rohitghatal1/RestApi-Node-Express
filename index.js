@@ -9,7 +9,7 @@ const PORT = 8000;
 const userRouter = require("./routes/user");
 
 //connection
-connectMongoDB('mongodb://127.0.0.1:27017/restApi');
+connectMongoDB('mongodb://127.0.0.1:27017/restApi').then(()=> console.log("MongoDB connected!!!"));
 
 //middle ware
 app.use(express.urlencoded({extended: false}));
