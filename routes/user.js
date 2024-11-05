@@ -2,24 +2,24 @@ const express = require("express");
 
 const router = express.Router()
 
-router.get("/users", async (req, res) => {
-    const allDBUsers = await User.find({});
-    const html = `
-        <ul>
-            ${allDBUsers.map((user) => `<li>${user.first_name} - ${user.email}</li>`).join("")}
-        </ul>
-    `;
-    res.send(html);
+// router.get("/users", async (req, res) => {
+//     const allDBUsers = await User.find({});
+//     const html = `
+//         <ul>
+//             ${allDBUsers.map((user) => `<li>${user.first_name} - ${user.email}</li>`).join("")}
+//         </ul>
+//     `;
+//     res.send(html);
 
-})
+// })
 
 
-router.get("/api/users", (req, res) => {
+router.get("/", (req, res) => {
     console.log("Im at  get route:", req.myName)
     res.json(users);
 })
 
-router.route("/api/users/:id")
+router.route("/:id")
     .get((req, res) => {
         const id = Number(req.params.id);
         const user = users.find((user) => user.id === id);
@@ -34,7 +34,7 @@ router.route("/api/users/:id")
         return res.json({ status: "Pending" })
     })
 
-router.post("/api/users", async (req, res) => {
+router.post("/", async (req, res) => {
     const body = req.body;
 
     const result =  await User.create({

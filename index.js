@@ -1,16 +1,15 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const fs = require("fs");
-const { type } = require("os");
+
+const {connectMongoDB} = require("./connection")
 
 const app = express();
 const PORT = 8000;
 
-//connection
-mongoose.connect('mongodb://127.0.0.1:27017/restApi')
-.then(()=> console.log("Mongodb connected"))
-.catch((err) => console.log("Mongo error", err));
 
+const userRouter = require("./routes/user");
+
+//connection
+connectMongoDB('mongodb://127.0.0.1:27017/restApi');
 
 //middle ware
 app.use(express.urlencoded({extended: false}));
@@ -29,5 +28,7 @@ app.use((req, res, next)=> {
     next();
 })
 
+// Routes 
+app.use("/user", userRouter);
 
 app.listen(PORT, () => console.log(`Server started at PORT: ${PORT}`))
