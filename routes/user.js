@@ -1,4 +1,5 @@
 const express = require("express");
+const {getAllUsers, getUserById, updateUserById, createUser} = require("./controllers/user")
 
 const router = express.Router()
 
@@ -14,39 +15,13 @@ const router = express.Router()
 // })
 
 
-router.get("/", (req, res) => {
-    console.log("Im at  get route:", req.myName)
-    res.json(users);
-})
+router.route("/")
+    .get(getAllUsers)
+    .post(createUser)
 
 router.route("/:id")
-    .get((req, res) => {
-        const id = Number(req.params.id);
-        const user = users.find((user) => user.id === id);
-        return res.json(user);
-    })
-    .patch((req, res) => {
-        // TODO: edit a user
-        return res.json({ status: "Pending" })
-    })
-    .delete((req, res) => {
-        //TODO: delete a user
-        return res.json({ status: "Pending" })
-    })
+    .get(getUserById)
+    .patch(updateUserById)
 
-router.post("/", async (req, res) => {
-    const body = req.body;
-
-    const result =  await User.create({
-        first_name: body.first_name,
-        last_name: body.last_name,
-        email: body.email,
-        gender: body.gender,
-        job_title: body.job_title
-    })
-    console.log(result);
-
-    return res.status(201).json({ msg: "success"});
-})
 
 module.exports = router;
