@@ -3,7 +3,7 @@ const express = require("express");
 const {connectMongoDB} = require("./connection")
 
 const app = express();
-const PORT = 8000;
+const PORT = 5000;
 
 
 const userRouter = require("./routes/user");

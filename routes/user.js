@@ -4,6 +4,7 @@ const { getAllUsers, getUserById, updateUserById, createUser } = require("../con
 const router = express.Router()
 
 router.get("/users", async (req, res) => {
+
     const allDBUsers = await User.find({});
     const html = `
         <ul>
@@ -13,7 +14,6 @@ router.get("/users", async (req, res) => {
     res.send(html);
 
 })
-
 
 router.route("/")
     .get(getAllUsers)
